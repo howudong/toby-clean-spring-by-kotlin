@@ -7,20 +7,23 @@ import io.kotest.matchers.shouldBe
 
 class MemberTest : BehaviorSpec() {
     private lateinit var member: Member
+    private lateinit var passwordEncoder: PasswordEncoder
 
     init {
         beforeContainer { testCase ->
             if (testCase.descriptor.depth() == 1) {
+                passwordEncoder = object : PasswordEncoder {
+                    override fun encode(password: String): String = password.uppercase()
+
+                    override fun matches(password: String, passwordHash: String): Boolean =
+                        password.uppercase() == passwordHash
+                }
                 member = Member.create(
                     "tjdvy953@naver.com",
                     "howudong",
                     "secret",
-                    object : PasswordEncoder {
-                        override fun encode(password: String): String = password.uppercase()
-
-                        override fun matches(password: String, passwordHash: String): Boolean =
-                            password.uppercase() == passwordHash
-                    })
+                    passwordEncoder
+                )
             }
         }
 
@@ -80,6 +83,28 @@ class MemberTest : BehaviorSpec() {
                     shouldThrow<IllegalStateException> { member.deActivated() }
                 }
             }
+        }
+        Given("맞는 비밀번호가 주어졌을 때") {
+            val password = "secret"
+
+            When("회원의 비밀번호와 비교한다면") {
+                val result = member.verifyPassword(password, passwordEncoder)
+                Then("true를 반환한다.") {
+                    result shouldBe true
+                }
+            }
+
+        }
+        Given("틀린 비밀번호가 주어졌을 때") {
+            val password = "secret12"
+
+            When("회원의 비밀번호와 비교한다면") {
+                val result = member.verifyPassword(password, passwordEncoder)
+                Then("false를 반환한다.") {
+                    result shouldBe false
+                }
+            }
+
         }
     }
 }

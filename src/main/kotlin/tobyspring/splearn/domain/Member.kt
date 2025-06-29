@@ -25,4 +25,7 @@ class Member private constructor(
 
         status = MemberStatus.DEACTIVATED
     }
+
+    fun verifyPassword(password: String, passwordEncoder: PasswordEncoder): Boolean =
+        passwordEncoder.matches(password, passwordHash)
 }

@@ -114,6 +114,17 @@ class MemberTest : BehaviorSpec() {
                 }
             }
         }
+        Given("새로운 비밀번호가 주어지고,") {
+            val password = "secret12"
+
+            When("회원의 비밀번호를 변경하면") {
+                member.changePassword(password, passwordEncoder)
+
+                Then("변경한 패스워드와 비밀번호가 일치해야한다") {
+                    member.verifyPassword(password, passwordEncoder) shouldBe true
+                }
+            }
+        }
     }
 }
 

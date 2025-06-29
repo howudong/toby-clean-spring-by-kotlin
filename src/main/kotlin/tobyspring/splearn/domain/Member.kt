@@ -1,13 +1,16 @@
 package tobyspring.splearn.domain
 
 class Member private constructor(
-    val email: String,
+    val email: Email,
     var passwordHash: String,
 ) {
 
     companion object {
         fun create(email: String, nickname: String, password: String, passwordEncoder: PasswordEncoder): Member {
-            val newMember = Member(email, passwordEncoder.encode(password))
+            val newMember = Member(
+                Email(address = email),
+                passwordEncoder.encode(password)
+            )
             newMember.changeNickname(nickname)
             return newMember
         }

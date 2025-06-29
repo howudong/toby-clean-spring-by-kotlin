@@ -19,10 +19,10 @@ class MemberTest : BehaviorSpec() {
                         password.uppercase() == passwordHash
                 }
                 member = Member.create(
-                    "tjdvy953@naver.com",
-                    "howudong",
-                    "secret",
-                    passwordEncoder
+                    email = "tjdvy953@naver.com",
+                    nickname = "howudong",
+                    password = "secret",
+                    passwordEncoder = passwordEncoder
                 )
             }
         }
@@ -144,6 +144,22 @@ class MemberTest : BehaviorSpec() {
                 member.deActivated()
                 Then("isActive는 false여야 한다.") {
                     member.isActive() shouldBe false
+                }
+            }
+        }
+        Given("잘못된 이메일이 주어졌을 때") {
+            val email = "dsfsfsfsdfs"
+
+            When("이를 이용해서 새로운 회원을 만들면") {
+                Then("테스트는 예외를 발생시켜야 한다.") {
+                    shouldThrow<IllegalArgumentException> {
+                        Member.create(
+                            email,
+                            "howudong",
+                            "asdfsf",
+                            passwordEncoder
+                        )
+                    }
                 }
             }
         }

@@ -104,7 +104,15 @@ class MemberTest : BehaviorSpec() {
                     result shouldBe false
                 }
             }
+        }
 
+        Given("howudong 회원이 주어지고") {
+            When("아이디를 toby로 변경한다면") {
+                member.changeNickname("toby")
+                Then("nickname이 toby로 변경되어야 한다") {
+                    member.nickname shouldBe "toby"
+                }
+            }
         }
     }
 }

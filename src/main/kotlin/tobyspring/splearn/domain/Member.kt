@@ -10,6 +10,13 @@ class Member(
 
     fun activate() {
         check(status == MemberStatus.PENDING) { "PENDING 상태가 아닙니다" }
+
         status = MemberStatus.ACTIVE
+    }
+
+    fun deActivated() {
+        check(status == MemberStatus.ACTIVE) { "ACTIVE 상태가 아닙니다" }
+        
+        status = MemberStatus.DEACTIVATED
     }
 }

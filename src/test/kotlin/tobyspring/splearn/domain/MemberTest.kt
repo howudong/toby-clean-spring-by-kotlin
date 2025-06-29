@@ -125,6 +125,28 @@ class MemberTest : BehaviorSpec() {
                 }
             }
         }
+        Given("회원이 주어졌을 때") {
+            When("초기 상태는 Pending 이므로") {
+                Then("isActive가 false여야 한다.") {
+                    member.isActive() shouldBe false
+                }
+            }
+
+            When("가입 완료를 했다면") {
+                member.activate()
+                Then("isActive는 true여야 한다.") {
+                    member.isActive() shouldBe true
+                }
+            }
+
+            When("탈퇴했다면") {
+                member.activate()
+                member.deActivated()
+                Then("isActive는 false여야 한다.") {
+                    member.isActive() shouldBe false
+                }
+            }
+        }
     }
 }
 

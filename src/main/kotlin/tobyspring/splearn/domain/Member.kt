@@ -41,4 +41,6 @@ class Member private constructor(
     fun changePassword(password: String, passwordEncoder: PasswordEncoder) {
         this.passwordHash = passwordEncoder.encode(password)
     }
+
+    fun isActive() = status == MemberStatus.ACTIVE
 }

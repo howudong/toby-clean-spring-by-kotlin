@@ -1,9 +1,10 @@
 package tobyspring.splearn.domain
 
+import jakarta.persistence.Embeddable
 import java.util.regex.Pattern
 
-@JvmInline
-value class Email(val address: String) {
+@Embeddable
+data class Email(val address: String) {
     companion object {
         private const val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
     }

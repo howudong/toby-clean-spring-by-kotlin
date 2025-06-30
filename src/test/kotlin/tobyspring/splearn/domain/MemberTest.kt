@@ -19,9 +19,11 @@ class MemberTest : BehaviorSpec() {
                         password.uppercase() == passwordHash
                 }
                 member = Member.register(
-                    email = "tjdvy953@naver.com",
-                    nickname = "howudong",
-                    password = "secret",
+                    MemberRegisterRequest(
+                        email = "tjdvy953@naver.com",
+                        nickname = "howudong",
+                        password = "secret",
+                    ),
                     passwordEncoder = passwordEncoder
                 )
             }
@@ -31,7 +33,7 @@ class MemberTest : BehaviorSpec() {
         {
             When("처음 생성되면") {
                 Then("PENDING으로 생성되어야 한다.") {
-                    member.status shouldBe MemberStatus.PENDING
+                    member.status() shouldBe MemberStatus.PENDING
 
                 }
             }
@@ -43,7 +45,7 @@ class MemberTest : BehaviorSpec() {
                 member.activate()
                 Then("멤버 상태는 ACTIVE 상태가 되어야 한다") {
 
-                    member.status shouldBe MemberStatus.ACTIVE
+                    member.status() shouldBe MemberStatus.ACTIVE
                 }
             }
         }
@@ -63,7 +65,7 @@ class MemberTest : BehaviorSpec() {
                 member.deActivated()
 
                 Then("해당 멤버의 상태는 DEACTIVATED가 되어야 한다.") {
-                    member.status shouldBe MemberStatus.DEACTIVATED
+                    member.status() shouldBe MemberStatus.DEACTIVATED
                 }
             }
         }
@@ -110,7 +112,7 @@ class MemberTest : BehaviorSpec() {
             When("아이디를 toby로 변경한다면") {
                 member.changeNickname("toby")
                 Then("nickname이 toby로 변경되어야 한다") {
-                    member.nickname shouldBe "toby"
+                    member.nickname() shouldBe "toby"
                 }
             }
         }
@@ -154,9 +156,11 @@ class MemberTest : BehaviorSpec() {
                 Then("테스트는 예외를 발생시켜야 한다.") {
                     shouldThrow<IllegalArgumentException> {
                         Member.register(
-                            email,
-                            "howudong",
-                            "asdfsf",
+                            MemberRegisterRequest(
+                                email,
+                                "howudong",
+                                "asdfsf",
+                            ),
                             passwordEncoder
                         )
                     }

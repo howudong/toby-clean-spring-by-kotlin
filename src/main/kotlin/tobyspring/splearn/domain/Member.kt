@@ -6,12 +6,12 @@ class Member private constructor(
 ) {
 
     companion object {
-        fun create(email: String, nickname: String, password: String, passwordEncoder: PasswordEncoder): Member {
+        fun register(memberRegisterRequest: MemberRegisterRequest, passwordEncoder: PasswordEncoder): Member {
             val newMember = Member(
-                Email(address = email),
-                passwordEncoder.encode(password)
+                Email(address = memberRegisterRequest.email),
+                passwordEncoder.encode(memberRegisterRequest.password)
             )
-            newMember.changeNickname(nickname)
+            newMember.changeNickname(memberRegisterRequest.nickname)
             return newMember
         }
     }

@@ -18,7 +18,7 @@ class MemberTest : BehaviorSpec() {
                     override fun matches(password: String, passwordHash: String): Boolean =
                         password.uppercase() == passwordHash
                 }
-                member = Member.create(
+                member = Member.register(
                     email = "tjdvy953@naver.com",
                     nickname = "howudong",
                     password = "secret",
@@ -153,7 +153,7 @@ class MemberTest : BehaviorSpec() {
             When("이를 이용해서 새로운 회원을 만들면") {
                 Then("테스트는 예외를 발생시켜야 한다.") {
                     shouldThrow<IllegalArgumentException> {
-                        Member.create(
+                        Member.register(
                             email,
                             "howudong",
                             "asdfsf",

@@ -1,5 +1,6 @@
 package tobyspring.splearn.application
 
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import tobyspring.splearn.application.provided.MemberRegister
 import tobyspring.splearn.application.required.EmailSender
@@ -11,6 +12,7 @@ import tobyspring.splearn.domain.MemberRegisterRequest
 import tobyspring.splearn.domain.PasswordEncoder
 
 @Service
+@Transactional
 class MemberService(
     private val memberRepository: MemberRepository,
     private val emailSender: EmailSender,

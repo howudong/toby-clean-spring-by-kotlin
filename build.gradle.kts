@@ -41,6 +41,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:5.6.2") // Kotest Assertions
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2") // Kotest Spring dependency available
     testImplementation("io.kotest:kotest-property:5.6.2")
+    testImplementation("io.mockk:mockk:${"1.14.4"}")
 }
 
 kotlin {

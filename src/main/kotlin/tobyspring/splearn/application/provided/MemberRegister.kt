@@ -7,5 +7,5 @@ import tobyspring.splearn.domain.MemberRegisterRequest
  * 회원 등록과 관련된 기능을 제공한다.
  */
 interface MemberRegister {
-    fun memberRegister(memberRegisterRequest: MemberRegisterRequest): Member
+    fun register(memberRegisterRequest: MemberRegisterRequest): Member
 }

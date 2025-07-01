@@ -7,12 +7,16 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import org.hibernate.annotations.NaturalId
+import org.hibernate.annotations.NaturalIdCache
 
 @Entity
+@NaturalIdCache
 class Member private constructor(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     @Embedded
+    @NaturalId
     val email: Email,
     @Enumerated(EnumType.STRING)
     private var status: MemberStatus = MemberStatus.PENDING,

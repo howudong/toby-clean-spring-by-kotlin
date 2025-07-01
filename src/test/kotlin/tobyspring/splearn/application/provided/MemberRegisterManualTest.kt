@@ -6,6 +6,7 @@ import io.mockk.verify
 import tobyspring.splearn.application.MemberService
 import tobyspring.splearn.application.required.EmailSender
 import tobyspring.splearn.application.required.MemberRepository
+import tobyspring.splearn.domain.Email
 import tobyspring.splearn.domain.Member
 import tobyspring.splearn.domain.MemberFixture
 
@@ -35,6 +36,10 @@ class MemberRegisterManualTest : BehaviorSpec() {
     inner class MemberRepositoryStub : MemberRepository {
         override fun save(member: Member): Member {
             return member
+        }
+
+        override fun findByEmail(email: Email): List<Member> {
+            return emptyList()
         }
     }
 }

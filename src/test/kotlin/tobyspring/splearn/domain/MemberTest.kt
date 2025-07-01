@@ -12,18 +12,9 @@ class MemberTest : BehaviorSpec() {
     init {
         beforeContainer { testCase ->
             if (testCase.descriptor.depth() == 1) {
-                passwordEncoder = object : PasswordEncoder {
-                    override fun encode(password: String): String = password.uppercase()
-
-                    override fun matches(password: String, passwordHash: String): Boolean =
-                        password.uppercase() == passwordHash
-                }
+                passwordEncoder = MemberFixture.createPasswordEncoder()
                 member = Member.register(
-                    MemberRegisterRequest(
-                        email = "tjdvy953@naver.com",
-                        nickname = "howudong",
-                        password = "secret",
-                    ),
+                    MemberFixture.createMemberRegisterRequest(),
                     passwordEncoder = passwordEncoder
                 )
             }
@@ -156,11 +147,7 @@ class MemberTest : BehaviorSpec() {
                 Then("테스트는 예외를 발생시켜야 한다.") {
                     shouldThrow<IllegalArgumentException> {
                         Member.register(
-                            MemberRegisterRequest(
-                                email,
-                                "howudong",
-                                "asdfsf",
-                            ),
+                            MemberFixture.createMemberRegisterRequest(email),
                             passwordEncoder
                         )
                     }

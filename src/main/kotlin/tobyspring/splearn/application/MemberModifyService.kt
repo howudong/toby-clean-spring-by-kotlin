@@ -15,7 +15,7 @@ import tobyspring.splearn.domain.PasswordEncoder
 @Service
 @Transactional
 @Validated
-class MemberService(
+class MemberModifyService(
     private val memberRepository: MemberRepository,
     private val emailSender: EmailSender,
     private val passwordEncoder: PasswordEncoder,

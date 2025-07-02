@@ -3,6 +3,7 @@ package tobyspring.splearn.application
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import org.springframework.validation.annotation.Validated
+import tobyspring.splearn.application.provided.MemberFinder
 import tobyspring.splearn.application.provided.MemberRegister
 import tobyspring.splearn.application.required.EmailSender
 import tobyspring.splearn.application.required.MemberRepository
@@ -16,14 +17,13 @@ import tobyspring.splearn.domain.PasswordEncoder
 @Transactional
 @Validated
 class MemberModifyService(
+    private val memberFinder: MemberFinder,
     private val memberRepository: MemberRepository,
     private val emailSender: EmailSender,
     private val passwordEncoder: PasswordEncoder,
 ) : MemberRegister {
     override fun activate(memberId: Long): Member {
-        val member = memberRepository
-            .findById(memberId)
-            .orElseThrow { throw IllegalArgumentException("존재하지 않는 회원 id 입니다. memberId : $memberId") }
+        val member = memberFinder.find(memberId)
 
         member.activate()
 

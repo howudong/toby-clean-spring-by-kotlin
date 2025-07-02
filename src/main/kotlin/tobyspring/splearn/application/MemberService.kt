@@ -20,6 +20,16 @@ class MemberService(
     private val emailSender: EmailSender,
     private val passwordEncoder: PasswordEncoder,
 ) : MemberRegister {
+    override fun activate(memberId: Long): Member {
+        val member = memberRepository
+            .findById(memberId)
+            .orElseThrow { throw IllegalArgumentException("존재하지 않는 회원 id 입니다. memberId : $memberId") }
+
+        member.activate()
+
+        return memberRepository.save(member)
+    }
+
     override fun register(memberRegisterRequest: MemberRegisterRequest): Member {
         checkDuplicateEmail(memberRegisterRequest)
 

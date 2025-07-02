@@ -6,11 +6,12 @@ import io.kotest.extensions.spring.SpringTestExtension
 import io.kotest.extensions.spring.SpringTestLifecycleMode
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import jakarta.validation.ConstraintViolationException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
+import org.springframework.test.context.TestConstructor
 import tobyspring.SplearnConfiguration
 import tobyspring.splearn.application.MemberService
 import tobyspring.splearn.domain.DuplicateEmailException
@@ -21,11 +22,13 @@ import tobyspring.splearn.domain.MemberStatus
 @SpringBootTest
 @Transactional
 @Import(SplearnConfiguration::class)
-class MemberRegisterTest : BehaviorSpec() {
-    override fun extensions() = listOf(SpringTestExtension(SpringTestLifecycleMode.Root))
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class MemberRegisterTest(
+    private val memberService: MemberService,
+    private val entityManager: EntityManager,
 
-    @Autowired
-    private lateinit var memberService: MemberService
+    ) : BehaviorSpec() {
+    override fun extensions() = listOf(SpringTestExtension(SpringTestLifecycleMode.Root))
 
     init {
         Given("createMemberRegister가 주어지고") {
@@ -63,6 +66,21 @@ class MemberRegisterTest : BehaviorSpec() {
                     shouldThrow<ConstraintViolationException> {
                         memberService.register(createMemberRegister)
                     }
+                }
+            }
+        }
+        Given("등록된 회원이 주어지고,") {
+            val memberRegisterRequest = Companion.createMemberRegisterRequest()
+            val member = memberService.register(memberRegisterRequest)
+
+            entityManager.flush()
+            entityManager.clear()
+
+            When("그 회원이 가입 완료를 시켰을 때") {
+                val updateMember = memberService.activate(member.id!!)
+
+                Then("그 회원의 상태는 ACTIVE 여야 한다") {
+                    updateMember.status() shouldBe MemberStatus.ACTIVE
                 }
             }
         }

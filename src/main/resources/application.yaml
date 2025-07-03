@@ -1,0 +1,5 @@
+spring:
+  application.name: spelarn
+  jpa:
+    hibernate:
+      ddl-auto: update

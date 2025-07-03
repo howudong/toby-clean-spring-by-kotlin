@@ -5,11 +5,13 @@ import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import lombok.ToString
 import org.hibernate.annotations.NaturalId
 import org.hibernate.annotations.NaturalIdCache
 
 @Entity
 @NaturalIdCache
+@ToString(callSuper = true)
 class Member private constructor(
     @Embedded
     @NaturalId

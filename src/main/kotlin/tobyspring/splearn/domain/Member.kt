@@ -1,28 +1,27 @@
 package tobyspring.splearn.domain
 
+import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
 import org.hibernate.annotations.NaturalId
 import org.hibernate.annotations.NaturalIdCache
 
 @Entity
 @NaturalIdCache
 class Member private constructor(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
     @Embedded
     @NaturalId
     val email: Email,
     @Enumerated(EnumType.STRING)
+    @Column(length = 100)
     private var status: MemberStatus = MemberStatus.PENDING,
+    @Column(length = 200)
     private var passwordHash: String,
+    @Column(length = 100)
     private var nickname: String
-) {
+) : AbstractEntity() {
 
     companion object {
         fun register(memberRegisterRequest: MemberRegisterRequest, passwordEncoder: PasswordEncoder) =

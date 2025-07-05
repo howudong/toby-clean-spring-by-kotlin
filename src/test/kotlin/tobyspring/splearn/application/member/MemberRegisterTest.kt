@@ -1,4 +1,4 @@
-package tobyspring.splearn.application.provided
+package tobyspring.splearn.application.member.provided
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -13,11 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestConstructor
 import tobyspring.SplearnConfiguration
-import tobyspring.splearn.application.MemberModifyService
-import tobyspring.splearn.domain.DuplicateEmailException
-import tobyspring.splearn.domain.MemberFixture.Companion
-import tobyspring.splearn.domain.MemberRegisterRequest
-import tobyspring.splearn.domain.MemberStatus
+import tobyspring.splearn.application.member.MemberModifyService
+import tobyspring.splearn.domain.member.DuplicateEmailException
+import tobyspring.splearn.domain.member.MemberFixture.Companion
+import tobyspring.splearn.domain.member.MemberRegisterRequest
+import tobyspring.splearn.domain.member.MemberStatus
 
 @SpringBootTest
 @Transactional

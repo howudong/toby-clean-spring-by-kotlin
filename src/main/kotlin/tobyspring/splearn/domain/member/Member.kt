@@ -1,13 +1,16 @@
-package tobyspring.splearn.domain
+package tobyspring.splearn.domain.member
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import jakarta.persistence.OneToOne
 import lombok.ToString
 import org.hibernate.annotations.NaturalId
 import org.hibernate.annotations.NaturalIdCache
+import tobyspring.splearn.domain.AbstractEntity
+import tobyspring.splearn.domain.shared.Email
 
 @Entity
 @NaturalIdCache
@@ -22,7 +25,10 @@ class Member private constructor(
     @Column(length = 200)
     private var passwordHash: String,
     @Column(length = 100)
-    private var nickname: String
+    private var nickname: String,
+
+    @OneToOne
+    private val memberDetail: MemberDetail,
 ) : AbstractEntity() {
 
     companion object {
@@ -30,7 +36,8 @@ class Member private constructor(
             Member(
                 email = Email(memberRegisterRequest.email),
                 passwordHash = passwordEncoder.encode(memberRegisterRequest.password),
-                nickname = memberRegisterRequest.nickname
+                nickname = memberRegisterRequest.nickname,
+                memberDetail = MemberDetail.create()
             )
     }
 

@@ -1,6 +1,6 @@
-package tobyspring.splearn.application.provided
+package tobyspring.splearn.application.member.provided
 
-import tobyspring.splearn.domain.Member
+import tobyspring.splearn.domain.member.Member
 
 /**
  * 회원 조회와 관련된 기능을 제공한다.

@@ -1,4 +1,4 @@
-package tobyspring.splearn.application.required
+package tobyspring.splearn.application.member.required
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -9,8 +9,8 @@ import jakarta.persistence.EntityManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.dao.DataIntegrityViolationException
-import tobyspring.splearn.domain.Member
-import tobyspring.splearn.domain.MemberFixture
+import tobyspring.splearn.domain.member.Member
+import tobyspring.splearn.domain.member.MemberFixture
 
 @DataJpaTest
 class MemberRepositoryTest : BehaviorSpec() {

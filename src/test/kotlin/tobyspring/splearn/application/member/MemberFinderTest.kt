@@ -1,4 +1,4 @@
-package tobyspring.splearn.application.provided
+package tobyspring.splearn.application.member.provided
 
 import io.kotest.core.extensions.Extension
 import io.kotest.core.spec.style.BehaviorSpec
@@ -11,9 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestConstructor
 import tobyspring.SplearnConfiguration
-import tobyspring.splearn.application.MemberModifyService
-import tobyspring.splearn.application.MemberQueryService
-import tobyspring.splearn.domain.MemberFixture
+import tobyspring.splearn.application.member.MemberModifyService
+import tobyspring.splearn.application.member.MemberQueryService
+import tobyspring.splearn.domain.member.MemberFixture
 
 @SpringBootTest
 @Transactional

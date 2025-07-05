@@ -61,7 +61,7 @@ class Member private constructor(
 
     fun updateInfo(infoUpdateRequest: MemberInfoUpdateRequest) {
         check(status == MemberStatus.ACTIVE) { "가입 완료된 상태에서만 변경할 수 있습니다." }
-        
+
         this.nickname = infoUpdateRequest.nickname
 
         memberDetail.updateInfo(infoUpdateRequest)
@@ -69,10 +69,7 @@ class Member private constructor(
 
     fun verifyPassword(password: String, passwordEncoder: PasswordEncoder): Boolean =
         passwordEncoder.matches(password, passwordHash)
-
-    fun changeNickname(nickname: String) {
-        this.nickname = nickname
-    }
+    
 
     fun changePassword(password: String, passwordEncoder: PasswordEncoder) {
         this.passwordHash = passwordEncoder.encode(password)

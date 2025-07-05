@@ -94,6 +94,8 @@ class MemberRegisterTest(
 
             memberModifyService.activate(member.id!!)
 
+            entityManager.flush()
+            entityManager.clear()
 
             When("그 회원 탈퇴했을 때") {
                 val found = memberModifyService.deactivate(member.id!!)
@@ -106,6 +108,18 @@ class MemberRegisterTest(
                     found.memberDetail.deactivatedAt shouldNotBe null
                 }
             }
+        }
+        Given("가입 완료한 회원이 다시 주어지고,") {
+            val memberRegisterRequest = Companion.createMemberRegisterRequest()
+            val member = memberModifyService.register(memberRegisterRequest)
+
+            entityManager.flush()
+            entityManager.clear()
+
+            memberModifyService.activate(member.id!!)
+
+            entityManager.flush()
+            entityManager.clear()
             When("그 회원의 정보를 변경할 때") {
                 val request = MemberInfoUpdateRequest(nickname = "howudong", "wnsvy123", "hello")
 
@@ -116,6 +130,5 @@ class MemberRegisterTest(
                 }
             }
         }
-
     }
 }

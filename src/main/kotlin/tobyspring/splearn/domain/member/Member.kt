@@ -61,6 +61,7 @@ class Member private constructor(
 
     fun updateInfo(infoUpdateRequest: MemberInfoUpdateRequest) {
         this.nickname = infoUpdateRequest.nickname
+        
         memberDetail.updateInfo(infoUpdateRequest)
     }
 

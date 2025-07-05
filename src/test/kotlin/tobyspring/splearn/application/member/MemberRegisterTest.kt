@@ -16,6 +16,7 @@ import tobyspring.SplearnConfiguration
 import tobyspring.splearn.application.member.MemberModifyService
 import tobyspring.splearn.domain.member.DuplicateEmailException
 import tobyspring.splearn.domain.member.MemberFixture.Companion
+import tobyspring.splearn.domain.member.MemberInfoUpdateRequest
 import tobyspring.splearn.domain.member.MemberRegisterRequest
 import tobyspring.splearn.domain.member.MemberStatus
 
@@ -84,5 +85,37 @@ class MemberRegisterTest(
                 }
             }
         }
+        Given("가입 완료된 회원이 주어지고,") {
+            val memberRegisterRequest = Companion.createMemberRegisterRequest()
+            val member = memberModifyService.register(memberRegisterRequest)
+
+            entityManager.flush()
+            entityManager.clear()
+
+            memberModifyService.activate(member.id!!)
+
+
+            When("그 회원 탈퇴했을 때") {
+                val found = memberModifyService.deactivate(member.id!!)
+
+                Then("그 회원의 상태는 DEACTIVATED 여야 한다") {
+                    found.status() shouldBe MemberStatus.DEACTIVATED
+                }
+
+                Then("그 회원의 deactivatedAt은 null이 아니어야 한다,") {
+                    found.memberDetail.deactivatedAt shouldNotBe null
+                }
+            }
+            When("그 회원의 정보를 변경할 때") {
+                val request = MemberInfoUpdateRequest(nickname = "howudong", "wnsvy123", "hello")
+
+                val updateMember = memberModifyService.updateInfo(member.id!!, request)
+
+                Then("address가 변경되어야 한다.") {
+                    updateMember.memberDetail.profile!!.address shouldBe request.profileAddress
+                }
+            }
+        }
+
     }
 }

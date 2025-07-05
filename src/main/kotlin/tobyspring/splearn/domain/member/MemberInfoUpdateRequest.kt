@@ -1,7 +1,9 @@
 package tobyspring.splearn.domain.member
 
+import jakarta.validation.constraints.Size
+
 data class MemberInfoUpdateRequest(
-    val nickname: String,
-    val profileAddress: String,
+    @Size(min = 5, max = 20) val nickname: String,
+    @Size(max = 15) val profileAddress: String,
     val introduction: String,
 )

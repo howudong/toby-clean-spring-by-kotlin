@@ -177,6 +177,11 @@ class MemberTest : BehaviorSpec() {
                     member.memberDetail.profile!!.address shouldBe "howudong"
                 }
             }
+            When("가입 대기인 회원이 있을 때, 그 멤버의 정보를 변경했을 때") {
+                Then("실패해야한다.") {
+                    shouldThrow<IllegalStateException> { member.updateInfo(request) }
+                }
+            }
         }
     }
 }

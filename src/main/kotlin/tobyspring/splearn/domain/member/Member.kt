@@ -60,8 +60,10 @@ class Member private constructor(
     }
 
     fun updateInfo(infoUpdateRequest: MemberInfoUpdateRequest) {
-        this.nickname = infoUpdateRequest.nickname
+        check(status == MemberStatus.ACTIVE) { "가입 완료된 상태에서만 변경할 수 있습니다." }
         
+        this.nickname = infoUpdateRequest.nickname
+
         memberDetail.updateInfo(infoUpdateRequest)
     }
 

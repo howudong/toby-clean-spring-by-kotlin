@@ -11,7 +11,6 @@ import jakarta.persistence.OneToOne
 import lombok.ToString
 import org.hibernate.annotations.NaturalId
 import org.hibernate.annotations.NaturalIdCache
-import tobyspring.splearn.application.member.MemberInfoUpdateRequest
 import tobyspring.splearn.domain.AbstractEntity
 import tobyspring.splearn.domain.shared.Email
 

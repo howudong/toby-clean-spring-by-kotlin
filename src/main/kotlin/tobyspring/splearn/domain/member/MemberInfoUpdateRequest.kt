@@ -1,4 +1,4 @@
-package tobyspring.splearn.application.member
+package tobyspring.splearn.domain.member
 
 data class MemberInfoUpdateRequest(
     val nickname: String,

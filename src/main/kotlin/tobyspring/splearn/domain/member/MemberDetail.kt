@@ -2,7 +2,6 @@ package tobyspring.splearn.domain.member
 
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
-import tobyspring.splearn.application.member.MemberInfoUpdateRequest
 import tobyspring.splearn.domain.AbstractEntity
 import java.time.LocalDateTime
 

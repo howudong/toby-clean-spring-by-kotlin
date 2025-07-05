@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import tobyspring.splearn.application.member.MemberInfoUpdateRequest
 
 
 class MemberTest : BehaviorSpec() {
@@ -161,6 +162,20 @@ class MemberTest : BehaviorSpec() {
                             passwordEncoder
                         )
                     }
+                }
+            }
+        }
+        Given("변경될 정보가 주어지고,") {
+            val request = MemberInfoUpdateRequest(nickname = "호우동", "howudong", "hello")
+
+            When("가입이 완료된 회원이 있을 때, 그 멤버의 정보를 변경했을 때") {
+                member.activate()
+                member.updateInfo(request)
+
+                Then("모든 정보가 변경되어야 한다.") {
+                    member.nickname() shouldBe "호우동"
+                    member.memberDetail.introduction shouldBe "hello"
+                    member.memberDetail.profile!!.address shouldBe "howudong"
                 }
             }
         }

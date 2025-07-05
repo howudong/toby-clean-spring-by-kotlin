@@ -11,6 +11,7 @@ import jakarta.persistence.OneToOne
 import lombok.ToString
 import org.hibernate.annotations.NaturalId
 import org.hibernate.annotations.NaturalIdCache
+import tobyspring.splearn.application.member.MemberInfoUpdateRequest
 import tobyspring.splearn.domain.AbstractEntity
 import tobyspring.splearn.domain.shared.Email
 
@@ -57,6 +58,11 @@ class Member private constructor(
         status = MemberStatus.DEACTIVATED
 
         memberDetail.deactivate()
+    }
+
+    fun updateInfo(infoUpdateRequest: MemberInfoUpdateRequest) {
+        this.nickname = infoUpdateRequest.nickname
+        memberDetail.updateInfo(infoUpdateRequest)
     }
 
     fun verifyPassword(password: String, passwordEncoder: PasswordEncoder): Boolean =

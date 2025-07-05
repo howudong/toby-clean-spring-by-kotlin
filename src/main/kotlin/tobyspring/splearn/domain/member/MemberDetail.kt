@@ -1,18 +1,22 @@
 package tobyspring.splearn.domain.member
 
+import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
+import tobyspring.splearn.application.member.MemberInfoUpdateRequest
 import tobyspring.splearn.domain.AbstractEntity
 import java.time.LocalDateTime
 
 @Entity
 class MemberDetail private constructor(
-    profile: String? = null,
+    profile: Profile? = null,
     introduction: String? = null,
     val registeredAt: LocalDateTime,
     activatedAt: LocalDateTime? = null,
     deactivatedAt: LocalDateTime? = null,
 ) : AbstractEntity() {
-    var profile: String? = profile
+
+    @Embedded
+    var profile: Profile? = profile
         protected set
 
     var introduction: String? = introduction
@@ -40,5 +44,10 @@ class MemberDetail private constructor(
         check(deactivatedAt == null) { "이미 deactivate가 등록된 상태입니다." }
 
         deactivatedAt = LocalDateTime.now()
+    }
+
+    internal fun updateInfo(infoUpdateRequest: MemberInfoUpdateRequest) {
+        this.profile = Profile(address = infoUpdateRequest.profileAddress)
+        this.introduction = infoUpdateRequest.introduction
     }
 }

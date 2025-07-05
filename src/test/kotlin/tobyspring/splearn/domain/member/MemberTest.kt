@@ -3,6 +3,7 @@ package tobyspring.splearn.domain.member
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 
 class MemberTest : BehaviorSpec() {
@@ -26,6 +27,9 @@ class MemberTest : BehaviorSpec() {
                 Then("PENDING으로 생성되어야 한다.") {
                     member.status() shouldBe MemberStatus.PENDING
 
+                }
+                Then("memberDetail의 registerdAt이 존재해야한다.") {
+                    member.memberDetail.registeredAt shouldNotBe null
                 }
             }
         }

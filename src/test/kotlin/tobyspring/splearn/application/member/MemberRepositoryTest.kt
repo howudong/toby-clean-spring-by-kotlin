@@ -35,10 +35,20 @@ class MemberRepositoryTest : BehaviorSpec() {
                 )
             When("회원이 저장되면") {
                 memberRepository.save(member)
+
+                entityManager.flush()
+                entityManager.clear()
+
                 Then("id가 null이면 안된다") {
-                    entityManager.flush()
-                    entityManager.clear()
+
                     member.id shouldNotBe null
+                }
+
+                Then("찾아온 회원의 registerdAt 정보는 null이 아니어야 한다.") {
+                    memberRepository
+                        .findById(member.id!!)
+                        .orElseThrow()
+                        .let { it.memberDetail.registeredAt shouldNotBe null }
                 }
             }
         }

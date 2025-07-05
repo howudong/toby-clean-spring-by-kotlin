@@ -1,10 +1,12 @@
 package tobyspring.splearn.domain.member
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
 import jakarta.persistence.OneToOne
 import lombok.ToString
 import org.hibernate.annotations.NaturalId
@@ -27,12 +29,12 @@ class Member private constructor(
     @Column(length = 100)
     private var nickname: String,
 
-    @OneToOne
-    private val memberDetail: MemberDetail,
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val memberDetail: MemberDetail,
 ) : AbstractEntity() {
 
     companion object {
-        fun register(memberRegisterRequest: MemberRegisterRequest, passwordEncoder: PasswordEncoder) =
+        internal fun register(memberRegisterRequest: MemberRegisterRequest, passwordEncoder: PasswordEncoder) =
             Member(
                 email = Email(memberRegisterRequest.email),
                 passwordHash = passwordEncoder.encode(memberRegisterRequest.password),

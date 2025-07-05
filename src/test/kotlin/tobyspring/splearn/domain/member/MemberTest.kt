@@ -42,6 +42,9 @@ class MemberTest : BehaviorSpec() {
 
                     member.status() shouldBe MemberStatus.ACTIVE
                 }
+                Then("MemberDetail의 ActivatedAt은 null이 아니어야 한다") {
+                    member.memberDetail.activatedAt shouldNotBe null
+                }
             }
         }
         Given("회원이 ") {
@@ -61,6 +64,9 @@ class MemberTest : BehaviorSpec() {
 
                 Then("해당 멤버의 상태는 DEACTIVATED가 되어야 한다.") {
                     member.status() shouldBe MemberStatus.DEACTIVATED
+                }
+                Then("해당 멤버의 MemberDetail의 deactivatedAt은 null이 아니어야 한다.") {
+                    member.memberDetail.deactivatedAt shouldNotBe null
                 }
             }
         }

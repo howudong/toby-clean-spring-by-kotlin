@@ -47,12 +47,16 @@ class Member private constructor(
         check(status == MemberStatus.PENDING) { "PENDING 상태가 아닙니다" }
 
         status = MemberStatus.ACTIVE
+
+        memberDetail.activate()
     }
 
     fun deActivated() {
         check(status == MemberStatus.ACTIVE) { "ACTIVE 상태가 아닙니다" }
 
         status = MemberStatus.DEACTIVATED
+
+        memberDetail.deactivate()
     }
 
     fun verifyPassword(password: String, passwordEncoder: PasswordEncoder): Boolean =
